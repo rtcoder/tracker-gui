@@ -9,7 +9,12 @@ function PolygonSelect() {
       <div className="content">
 
         <div className="canvas-container">
-          RAW obraz z kamery
+          <video>
+            fallback
+          </video>
+          <canvas>
+
+          </canvas>
         </div>
 
 

@@ -11,8 +11,8 @@ function AddressForm({address: _address, addressUpdated}) {
   const [address, setAddress] = useState('');
   const [addressEmpty, setAddressEmpty] = useState(true);
 
-  useEffect(() => {
-    const isAddressEmpty = !_address.length;
+  const updateParts = fullAddress => {
+    const isAddressEmpty = !fullAddress.length;
     if (isAddressEmpty) {
       setProtocol('');
       setLogin('');
@@ -22,8 +22,7 @@ function AddressForm({address: _address, addressUpdated}) {
       setPath('');
       return;
     }
-    console.log({_address});
-    const protocolLocation = _address.split('//');
+    const protocolLocation = fullAddress.split('//');
     let _protocol = '';
     let _location = '';
     if (protocolLocation.length === 2) {
@@ -53,7 +52,32 @@ function AddressForm({address: _address, addressUpdated}) {
     setPort(_port);
     setPath(_path);
 
+    if (addressUpdated) {
+      if (isAddressEmpty) {
+        addressUpdated({address: '', protocol: '', login: '', password: '', ip: '', port: '', path: ''});
+      } else {
+        addressUpdated({
+          address: fullAddress,
+          protocol: _protocol,
+          login: _login,
+          password: _password,
+          ip: _host,
+          port: _port,
+          path: _path
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateParts(_address);
   }, [_address]);
+
+  useEffect(() => {
+    if(!address.startsWith('[')) {
+      updateParts(address);
+    }
+  }, [address]);
 
   useEffect(() => {
     let isAddressEmpty;
@@ -70,12 +94,13 @@ function AddressForm({address: _address, addressUpdated}) {
       if (isAddressEmpty) {
         addressUpdated({address: '', protocol: '', login: '', password: '', ip: '', port: '', path: ''});
       } else {
-        addressUpdated({address:addr, protocol, login, password, ip, port, path});
+        addressUpdated({address: addr, protocol, login, password, ip, port, path});
       }
     }
     setAddressEmpty(isAddressEmpty);
   }, [protocol, login, password, ip, port, path, addressEmpty]);
 
+  const handleAddressChange = e => setAddress(e.target.value);
   const handleProtocolChange = e => setProtocol(e.target.value);
   const handleLoginChange = e => setLogin(e.target.value);
   const handlePasswordChange = e => setPassWord(e.target.value);
@@ -86,6 +111,8 @@ function AddressForm({address: _address, addressUpdated}) {
   return (
     <div className="form">
       <div className="inputs">
+        <input type="text" placeholder="adres" value={address.startsWith('[') ? '' : address}
+               onChange={handleAddressChange}/>
         <input type="text" placeholder="protokół" value={protocol} onChange={handleProtocolChange}/>
         <input type="text" placeholder="login" value={login} onChange={handleLoginChange}/>
         <input type="text" placeholder="hasło" value={password} onChange={handlePasswordChange}/>
