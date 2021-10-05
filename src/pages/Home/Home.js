@@ -1,18 +1,27 @@
 import './Home.css';
 import LinkBtn from "../../components/LinkBtn/LinkBtn";
 import AddressForm from "../../components/AddressForm/AddressForm";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+
+const getAddressFromLS = () => {
+  return localStorage.getItem('tracker-cam-address') || '';
+};
+const setAddressInLS = value => {
+  localStorage.setItem('tracker-cam-address', value);
+};
 
 function Home() {
   const [address, setAddress] = useState('');
   const [addressValid, setAddressValid] = useState('');
-
+  useEffect(() => {
+    setAddress(getAddressFromLS());
+  }, []);
   const handleSelectChange = e => setAddress(e.target.value);
   const isValidHttpUrl = ({address, protocol, login, password, ip, port, path}) => {
     console.log(address, (
       (login.length && password.length)
       || (!login.length && !password.length)
-    ),{address, protocol, login, password, ip, port, path});
+    ), {address, protocol, login, password, ip, port, path});
 
     setAddressValid(protocol.length
       && ip.length
@@ -27,6 +36,11 @@ function Home() {
     isValidHttpUrl({address, protocol, login, password, ip, port, path});
     setAddress(address);
   };
+  useEffect(() => {
+    if (addressValid) {
+      setAddressInLS(address);
+    }
+  }, [address, addressValid]);
   return (
     <>
       <header>
@@ -42,11 +56,6 @@ function Home() {
         {address}
         <p>Testowy tekst na test pulla</p>
         <p>Testowy tekst na test pulla</p>
-        <p>Testowy tekst na test pulla</p>
-        <p>Testowy tekst na test pulla</p>
-        <p>Testowy tekst na test pulla</p>
-        <p>Testowy tekst na test pulla</p>
-        <p>Testowy tekst na test pulla</p>ddd
         <p>Testowy tekst na test pulla</p>
         {
           !address.length || !addressValid
