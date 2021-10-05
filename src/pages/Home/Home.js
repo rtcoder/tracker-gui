@@ -47,6 +47,7 @@ function Home() {
           <LinkBtn url="/video" disabled={!address.length}>Podgląd śledzenia</LinkBtn>
         </div>
         {address}
+        <p>Testowy tekst na test pulla</p>
         {
           !address.length || !addressValid
             ? <p>Aby przejść dalej musisz podać poprawny adres IP kamery</p>
