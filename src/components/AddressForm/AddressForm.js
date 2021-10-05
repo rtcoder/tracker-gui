@@ -13,7 +13,35 @@ function AddressForm({address: _address}) {
   useEffect(() => {
     console.log({_address});
 
+    const protocolLocation = _address.split('//');
+    let _protocol = '';
+    let _location = '';
+    if (protocolLocation.length === 2) {
+      _protocol = protocolLocation[0].replace(':', '');
+      _location = protocolLocation[1];
+    } else {
+      _location = protocolLocation[0];
+    }
 
+    const credentialsHostPort = _location.split('@');
+    let _credentials = '';
+    let _hostPortPath = '';
+    if (credentialsHostPort.length === 2) {
+      _credentials = credentialsHostPort[0];
+      _hostPortPath = credentialsHostPort[1];
+    } else {
+      _hostPortPath = credentialsHostPort[0];
+    }
+    const [_login = '', _password = ''] = _credentials.split(':');
+    const [_hostPort, ..._path] = _hostPortPath.split('/');
+    const [_host, _port = ''] = _hostPort.split(':');
+
+    setProtocol(_protocol);
+    setLogin(_login);
+    setPassWord(_password);
+    setIp(_host);
+    setPort(_port);
+    setPath(_path);
 
   }, [_address]);
 
@@ -25,7 +53,7 @@ function AddressForm({address: _address}) {
     let addr = path.length ? `${location}/${path}` : `${location}`;
     addr = addr.length ? `${__protocol}://${addr}` : '[protokół]://[login]:[hasło]@[ip]:[port]/[ścieżka]';
     setAddress(addr);
-  }, [protocol,login, password, ip, port, path]);
+  }, [protocol, login, password, ip, port, path]);
 
   const handleProtocolChange = e => setProtocol(e.target.value);
   const handleLoginChange = e => setLogin(e.target.value);
