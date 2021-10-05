@@ -5,9 +5,35 @@ import {useState} from "react";
 
 function Home() {
   const [address, setAddress] = useState('');
+  const [addressValid, setAddressValid] = useState('');
 
   const handleSelectChange = e => setAddress(e.target.value);
+  const isValidHttpUrl = ({address, protocol, login, password, ip, port, path}) => {
+    let url;
+    try {
+      url = new URL(address);
+    } catch (_) {
+      setAddressValid(false);
+      return;
+    }
+    console.log(url, address, (
+      (login.length && password.length)
+      || (!login.length && !password.length)
+    ),{address, protocol, login, password, ip, port, path});
 
+    setAddressValid(protocol.length
+      && ip.length
+      && (
+        (login.length && password.length)
+        || (!login.length && !password.length)
+      )
+      && /^\d+$/.test(port)
+    );
+  };
+  const updateAddress = ({address, protocol, login, password, ip, port, path}) => {
+    isValidHttpUrl({address, protocol, login, password, ip, port, path});
+    setAddress(address);
+  };
   return (
     <>
       <header>
@@ -17,12 +43,18 @@ function Home() {
 
       <div className="content home">
         <div className="links">
-          <LinkBtn url="/polygon">Zaznaczenie sceny</LinkBtn>
-          <LinkBtn url="/video">Podgląd śledzenia</LinkBtn>
+          <LinkBtn url="/polygon" disabled={!address.length}>Zaznaczenie sceny</LinkBtn>
+          <LinkBtn url="/video" disabled={!address.length}>Podgląd śledzenia</LinkBtn>
         </div>
+        {address}
+        {
+          !address.length || !addressValid
+            ? <p>Aby przejść dalej musisz podać poprawny adres IP kamery</p>
+            : ''
+        }
 
         <div className="address">
-          <AddressForm address={address} addressUpdated={val => setAddress(val)}/>
+          <AddressForm address={address} addressUpdated={updateAddress}/>
           <div className="addresses-from-local-network">
             <span>lub wybierz z listy</span>
             <select onChange={handleSelectChange}>

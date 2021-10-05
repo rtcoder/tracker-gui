@@ -13,9 +13,16 @@ function AddressForm({address: _address, addressUpdated}) {
 
   useEffect(() => {
     const isAddressEmpty = !_address.length;
-    if (isAddressEmpty ) {
+    if (isAddressEmpty) {
+      setProtocol('');
+      setLogin('');
+      setPassWord('');
+      setIp('');
+      setPort('');
+      setPath('');
       return;
     }
+    console.log({_address});
     const protocolLocation = _address.split('//');
     let _protocol = '';
     let _location = '';
@@ -46,28 +53,28 @@ function AddressForm({address: _address, addressUpdated}) {
     setPort(_port);
     setPath(_path);
 
-  }, [_address, addressEmpty]);
+  }, [_address]);
 
   useEffect(() => {
-    let isAddressEmpty = false;
+    let isAddressEmpty;
     const ipPort = port.length ? `${ip}:${port}` : ip;
     const loginPassword = login.length || password.length ? `${login}:${password}` : '';
     const location = loginPassword.length ? `${loginPassword}@${ipPort}` : ipPort;
     const __protocol = protocol.length ? protocol : 'rstp';
     let addr = path.length ? `${location}/${path}` : `${location}`;
-    isAddressEmpty = !!addr.length;
     addr = addr.length ? `${__protocol}://${addr}` : '[protokół]://[login]:[hasło]@[ip]:[port]/[ścieżka]';
+    isAddressEmpty = addr.startsWith('[');
     setAddress(addr);
 
     if (addressUpdated) {
       if (isAddressEmpty) {
-        addressUpdated('');
+        addressUpdated({address: '', protocol: '', login: '', password: '', ip: '', port: '', path: ''});
       } else {
-        addressUpdated(addr);
+        addressUpdated({address:addr, protocol, login, password, ip, port, path});
       }
     }
-    setAddressEmpty(true);
-  }, [protocol, login, password, ip, port, path, addressUpdated,addressEmpty]);
+    setAddressEmpty(isAddressEmpty);
+  }, [protocol, login, password, ip, port, path, addressEmpty]);
 
   const handleProtocolChange = e => setProtocol(e.target.value);
   const handleLoginChange = e => setLogin(e.target.value);
