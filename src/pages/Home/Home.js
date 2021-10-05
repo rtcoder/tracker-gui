@@ -22,15 +22,17 @@ function Home() {
         </div>
 
         <div className="address">
-          <AddressForm address={address}/>
-          <span>lub wybierz z listy</span>
-          <select onChange={handleSelectChange}>
-          <option value="">Wybierz</option>
-          <option value="http://facebook.com">http://facebook.com</option>
-          <option value="ftp://admin:pass@123.456.789:1212">ftp://admin:pass@123.456.789:1212</option>
-          <option value="432.64.2:4443">432.64.2:4443</option>
-          <option value="ssh://123.456.789:1212">ssh://123.456.789:1212</option>
-          </select>
+          <AddressForm address={address} addressUpdated={val => setAddress(val)}/>
+          <div className="addresses-from-local-network">
+            <span>lub wybierz z listy</span>
+            <select onChange={handleSelectChange}>
+              <option value="">Wybierz</option>
+              <option value="http://facebook.com">http://facebook.com</option>
+              <option value="ftp://admin:pass@123.456.789:1212">ftp://admin:pass@123.456.789:1212</option>
+              <option value="432.64.2:4443">432.64.2:4443</option>
+              <option value="ssh://123.456.789:1212">ssh://123.456.789:1212</option>
+            </select>
+          </div>
         </div>
       </div>
     </>
