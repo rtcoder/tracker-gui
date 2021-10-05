@@ -1,4 +1,5 @@
 import LinkBtn from "../../components/LinkBtn/LinkBtn";
+import CanvasVideoPreview from "../../components/CanvasVideoPreview/CanvasVideoPreview";
 
 function VideoPreview() {
   return (
@@ -7,6 +8,7 @@ function VideoPreview() {
         <LinkBtn url="/">Wstecz</LinkBtn>
       </header>
       <div className="content">
+        <CanvasVideoPreview selectingActivw={false}/>
       </div>
     </>
   );
