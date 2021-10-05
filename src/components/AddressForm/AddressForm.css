@@ -1,0 +1,45 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.inputs input {
+  border: 2px solid transparent;
+  height: 30px;
+  margin-top: 5px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  outline: none;
+  padding: 10px;
+  color: #ffffff;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+
+.inputs input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+
+.inputs input:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.inputs input::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.inputs input:focus {
+  border-color: rgba(255, 255, 255, 0.45)
+}

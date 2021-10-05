@@ -1,0 +1,37 @@
+button {
+  color: var(--accent-color);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  font-weight: bold;
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 5px;
+  position: relative;
+}
+
+button * {
+  color: var(--accent-color);
+}
+
+button[disabled] {
+  filter: saturate(10%);
+  cursor: default;
+  pointer-events: none;
+}
+
+button:not([disabled])::after {
+  content: ' ';
+  position: absolute;
+  background: var(--accent-color);
+  height: 2px;
+  width: 0;
+  left: 0;
+  bottom: 0;
+  transition: width 0.3s ease-in-out;
+}
+
+button:hover::after {
+  width: 100%;
+}
