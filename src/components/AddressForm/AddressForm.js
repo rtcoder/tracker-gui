@@ -85,7 +85,6 @@ function AddressForm({address: _address, addressUpdated}) {
 
   return (
     <div className="form">
-      <code>{address}</code>
       <div className="inputs">
         <input type="text" placeholder="protokół" value={protocol} onChange={handleProtocolChange}/>
         <input type="text" placeholder="login" value={login} onChange={handleLoginChange}/>

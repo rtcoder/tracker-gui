@@ -13,6 +13,7 @@
 
 .address > * {
   width: 50%;
+  margin-top: 30px;
 }
 
 .addresses-from-local-network {
@@ -29,8 +30,8 @@
   .address > * {
     width: 100%;
   }
+}
 
-  .address > *:first-child {
-    margin-bottom: 20px;
-  }
+.error {
+  color: #f00;
 }
