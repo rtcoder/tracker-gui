@@ -9,14 +9,7 @@ function Home() {
 
   const handleSelectChange = e => setAddress(e.target.value);
   const isValidHttpUrl = ({address, protocol, login, password, ip, port, path}) => {
-    let url;
-    try {
-      url = new URL(address);
-    } catch (_) {
-      setAddressValid(false);
-      return;
-    }
-    console.log(url, address, (
+    console.log(address, (
       (login.length && password.length)
       || (!login.length && !password.length)
     ),{address, protocol, login, password, ip, port, path});
