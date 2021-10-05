@@ -2,13 +2,7 @@ import './Home.css';
 import LinkBtn from "../../components/LinkBtn/LinkBtn";
 import AddressForm from "../../components/AddressForm/AddressForm";
 import {useEffect, useState} from "react";
-
-const getAddressFromLS = () => {
-  return localStorage.getItem('tracker-cam-address') || '';
-};
-const setAddressInLS = value => {
-  localStorage.setItem('tracker-cam-address', value);
-};
+import {getAddressFromLS, setAddressInLS} from "../../helpers/local-storage";
 
 function Home() {
   const [address, setAddress] = useState('');
