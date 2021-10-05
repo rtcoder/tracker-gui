@@ -41,6 +41,13 @@ function Home() {
         </div>
         {address}
         <p>Testowy tekst na test pulla</p>
+        <p>Testowy tekst na test pulla</p>
+        <p>Testowy tekst na test pulla</p>
+        <p>Testowy tekst na test pulla</p>
+        <p>Testowy tekst na test pulla</p>
+        <p>Testowy tekst na test pulla</p>
+        <p>Testowy tekst na test pulla</p>
+        <p>Testowy tekst na test pulla</p>
         {
           !address.length || !addressValid
             ? <p>Aby przejść dalej musisz podać poprawny adres IP kamery</p>
